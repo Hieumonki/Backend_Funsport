@@ -1,4 +1,4 @@
-const { compare } = require("bcrypt");
+const { compare } = require("bcryptjs");
 const { theme, author,account } = require("../model/model");
 const userCon = {
   // add
