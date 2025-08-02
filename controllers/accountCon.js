@@ -122,5 +122,13 @@ const accountCon = {
     res.status(200).json("Đăng xuất thành công");
   }
 };
+const jwt = require('jsonwebtoken');
+
+const token = jwt.sign(
+  { id: user._id },
+  process.env.JWT_SECRET, // <-- phải đảm bảo có biến này
+  { expiresIn: '1d' }
+);
+
 
 module.exports = accountCon;

@@ -1,3 +1,5 @@
+require('dotenv').config(); // đặt đầu file server.js hoặc main.ts (NestJS)
+
 const productsellRouter = require("./routes/productsell");
 const express = require("express");
 const cors = require("cors");
