@@ -4,23 +4,30 @@ const { theme, author, product, products } = require("../model/model");
 const productCon = {
 
   addproduct: async (req, res) => {
-    try {
-      const newproduct = new product(req.body);
-      const saveproduct = await newproduct.save();
-      if (req.body.author) {
-        const authorData = await author.findById(req.body.author);
-        if (authorData) {
-          authorData.product.push(saveproduct._id);
-          await authorData.save();
-        } else {
-          // Xử lý trường hợp không tìm thấy tác giả
-        }
-      }
-      res.status(200).json(saveproduct);
-    } catch (error) {
-      res.status(500).json(error);
+  try {
+    const { name, price, image } = req.body;
+
+    if (!name || !price || !image) {
+      return res.status(400).json({ message: "Thiếu thông tin sản phẩm!" });
     }
-  },
+
+    const newproduct = new product(req.body);
+    const saveproduct = await newproduct.save();
+
+    if (req.body.author) {
+      const authorData = await author.findById(req.body.author);
+      if (authorData) {
+        authorData.product.push(saveproduct._id);
+        await authorData.save();
+      }
+    }
+
+    res.status(200).json(saveproduct);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+},
+
   getAllproduct: async (req, res) => {
     try {
       const { keyword, category } = req.query;
